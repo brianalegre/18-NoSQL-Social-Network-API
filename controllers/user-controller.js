@@ -72,8 +72,54 @@ module.exports = {
     },
 
     // ADD USER FRIEND
+    async addFriend(req, res) {
+        try {
+            // FIND USER
+            const updatedUser = await User.findOneAndUpdate(
+                { _id: req.params.id },
+                { $push: { friends: req.params.friendId } },
+            )
+            if (!updatedUser) {
+                return res.status(404).json(`Can't find User`)
+            }
+            // FIND FRIEND
+            const updatedFriend = await User.findOneAndUpdate(
+                { _id: req.params.friendId },
+                { $push: { friends: req.params.id } },
+            )
+            if (!updatedFriend) {
+                return res.status(404).json(`Can't find Friend`)
+            }
+            res.status(200).json('Friend Added')
+        } catch (err) {
+            res.status(500).json({ message: 'Error on addFriend', err })
+        }
+    },
 
     // DELETE USER FRIEND
+    async delFriend(req, res) {
+        try {
+            // FIND USER
+            const updatedUser = await User.findOneAndUpdate(
+                { _id: req.params.id },
+                { $push: { friends: req.params.friendId } },
+            )
+            if (!updatedUser) {
+                return res.status(404).json(`Can't find User`)
+            }
+            // FIND FRIEND
+            const updatedFriend = await User.findOneAndUpdate(
+                { _id: req.params.friendId },
+                { $push: { friends: req.params.id } },
+            )
+            if (!updatedFriend) {
+                return res.status(404).json(`Can't find Friend`)
+            }
+            res.status(200).json('Friend Deleted')
+        } catch (err) {
+            res.status(500).json({ message: 'Error ond delFriend', err })
+        }
+    },
 
 
 
