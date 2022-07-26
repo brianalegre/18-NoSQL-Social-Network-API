@@ -1,23 +1,88 @@
-// Import
-const connection = require('../config/connection');
-const { User, Thought, Reaction } = require('../models');
-const userSeed = require('./data');
+// IMPORT
+const connection = require("../config/connection");
+const { User, Thought, Reaction } = require("../models");
 
-connection.on('error', (err) => err);
+// USER SEED DATA
+const userSeed = [
+    {
+        'username': 'userOne',
+        'email': 'userOne@gmail.com',
+    },
+    {
+        'username': 'userTwo',
+        'email': 'userTwo@gmail.com',
+    },
+    {
+        'username': 'userThree',
+        'email': 'userThree@gmail.com',
+    },
+    {
+        'username': 'userFour',
+        'email': 'userFour@gmail.com',
+    },
+]
 
-connection.once('open', async () => {
-    console.log('connected');
+// THOUGHT SEED DATA
+const thoughtSeed = [
+    {
+        'thoughtText': 'First Thought',
+        'username': 'userOne'
+    },
+    {
+        'thoughtText': 'Second Thought',
+        'username': 'userTwo'
+    },
+    {
+        'thoughtText': 'Third Thought',
+        'username': 'userThree'
+    },
+    {
+        'thoughtText': 'Fourth Thought',
+        'username': 'userFour'
+    },
+]
 
-    // Drop existing Users
+// REACTION SEED DATA
+const reactionSeed = [
+    {
+        'reactionBody': 'First Reaction',
+        'username': 'userOne'
+    },
+    {
+        'reactionBody': 'Second Reaction',
+        'username': 'userTwo'
+    },
+    {
+        'reactionBody': 'Third Reaction',
+        'username': 'userThree'
+    },
+    {
+        'reactionBody': 'Fourth Reaction',
+        'username': 'userFour'
+    },
+]
+
+// SEED DATABASE
+connection.once("open", async () => {
+
+    // DEL EXISTING SEED
     await User.deleteMany({});
     await Thought.deleteMany({});
     await Reaction.deleteMany({});
 
-    // Add Users to the collection and await the results
+    // INSERT TO DB
     await User.collection.insertMany(userSeed);
+    console.log("Users successfully seeded!");
 
-    // Log out the seed data to indicate what should appear in the database
-    console.table(userSeed);
-    console.info('Seeding Users Complete! 🌱');
+    await Thought.collection.insertMany(thoughtSeed);
+    console.log("Thoughts successfully seeded!");
+
+    await Reaction.collection.insertMany(reactionSeed);
+    console.log("Reactions successfully seeded!");
+
+    console.info(' --- Seeding complete! ---');
     process.exit(0);
 });
+
+
+
