@@ -21,18 +21,18 @@ router.route('/')
 // /api/thoughts/:id
 // GET SINGLE THOUGHT, DEL THOUGHT, UPD THOUGHT
 router.route('/:id')
-.get(singleThought)
-.delete(delThought)
-.put(updateThought)
+    .get(singleThought)
+    .delete(delThought)
+    .put(updateThought)
 
 
 //TODO: ROUTE TO ADD REACTION TO A THOUGHT
-router.post('/:thoughtId/reactions', (req, res) => {
+router.post('/:id/reactions', (req, res) => {
 
 });
 
 //TODO: ROUTE TO DELETE A REACTION ON A THOUGHT
-router.delete('/:thoughtId/reactions/:reactionId', (req, res) => {
+router.delete('/:id/reactions/:reactionId', (req, res) => {
 
 })
 

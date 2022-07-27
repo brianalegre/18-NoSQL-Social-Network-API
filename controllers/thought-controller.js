@@ -1,5 +1,6 @@
 // Import
-const Thought = require('../models/Thought');
+const { Thought, Reaction } = require('../models')
+
 
 module.exports = {
 
@@ -74,10 +75,38 @@ module.exports = {
         }
     },
 
-    // GET REACTION
-
     // CREATE REACTION
+    async createReaction(req, res) {
+        try {
+            const newReaction = await Thought.findOneAndUpdate(
+                { id_: req.params.id },
+                { $addToSet: { reactions: body } },
+                { new: true },
+            )
+            if (!newReaction) {
+                return res.status(404).json('Thought not found')
+            }
+            res.status(200).json(newReaction)
+        } catch (err) {
+            res.status(500).json({ message: 'Error on createReaction', err })
+        }
+    },
 
     // DELETE REACTION
+    async delReaction(req, res) {
+        try {
+            const deleteReaction = await Thought.findOneAndUpdate(
+                { id_: req.params.id },
+                { $pull: { reactions: { reactionId: req.params.reactionId } } },
+                { new: true }
+            )
+            if (!deleteReaction) {
+                return res.status(404).json('Reaction not found')
+            }
+            res.status(200).json(deleteReaction)
+        } catch (err) {
+            res.status(500).json({ message: 'Error on delReaction', err })
+        }
+    },
 
 }
