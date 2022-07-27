@@ -5,7 +5,7 @@ const User = require('../models/User');
 
 module.exports = {
 
-    // All USERS + INCLUDE FRIENDS
+    // ALL USERS + INCLUDE FRIENDS
     async allUsers(req, res) {
         try {
             const users = await User.find();
