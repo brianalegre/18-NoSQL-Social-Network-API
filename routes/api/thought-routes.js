@@ -1,39 +1,38 @@
 
 const router = require('express').Router();
-const { Thought, Reaction} = require('../../models')
+const { Thought, Reaction } = require('../../models')
 
-//TODO: ROUTE TO GET ALL THOUGHTS
-router.get('/', (req,res)=> {
+// Controller
+const {
+    allThoughts,
+    createThought,
+    singleThought,
+    updateThought,
+    delThought,
+} = require('../../controllers/thought-controller');
 
-})
 
-//TODO: ROUTE TO CREATE A NEW THOUGHT
-router.post('/', (req,res)=> {
+// /api/thoughts
+// GET ALL THOUGHTS, CREATE THOUGHT
+router.route('/')
+    .get(allThoughts)
+    .post(createThought);
 
-});
+// /api/thoughts/:id
+// GET SINGLE THOUGHT, DEL THOUGHT, UPD THOUGHT
+router.route('/:id')
+.get(singleThought)
+.delete(delThought)
+.put(updateThought)
 
-//TODO: ROUTE TO GET SINGLE THOUGHT BASED ON THOUGHT ID
-router.get('/:thoughtId', (req,res)=> {
-
-})
-
-//TODO: ROUTE TO UPDATE A THOUGHT
-router.put('/', (req,res)=> {
-
-})
-
-//TODO: ROUTE TO DELETE A THOUGHT BASED ON THOUGHT ID
-router.delete('/:thoughtId', (req,res)=> {
-
-});
 
 //TODO: ROUTE TO ADD REACTION TO A THOUGHT
-router.post('/:thoughtId/reactions', (req,res)=> {
+router.post('/:thoughtId/reactions', (req, res) => {
 
 });
 
 //TODO: ROUTE TO DELETE A REACTION ON A THOUGHT
-router.delete('/:thoughtId/reactions/:reactionId', (req,res)=> {
+router.delete('/:thoughtId/reactions/:reactionId', (req, res) => {
 
 })
 
