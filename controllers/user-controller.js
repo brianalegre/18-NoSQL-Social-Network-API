@@ -75,7 +75,7 @@ module.exports = {
     async addFriend(req, res) {
         try {
             // FIND USER
-            const updatedUser = await User.findOneAndUpdate(
+            const updatedUser = await User.findByIdAndUpdate(
                 { _id: req.params.id },
                 { $push: { friends: req.params.friendId } },
             )
@@ -83,7 +83,7 @@ module.exports = {
                 return res.status(404).json(`Can't find User`)
             }
             // FIND FRIEND
-            const updatedFriend = await User.findOneAndUpdate(
+            const updatedFriend = await User.findByIdAndUpdate(
                 { _id: req.params.friendId },
                 { $push: { friends: req.params.id } },
             )
@@ -100,19 +100,19 @@ module.exports = {
     async delFriend(req, res) {
         try {
             // FIND USER
-            const updatedUser = await User.findOneAndUpdate(
+            const updatedUser = await User.findByIdAndUpdate(
                 { _id: req.params.id },
-                { $push: { friends: req.params.friendId } },
+                { $pull: { friends: req.params.friendId } },
             )
             if (!updatedUser) {
                 return res.status(404).json(`Can't find User`)
             }
             // FIND FRIEND
-            const updatedFriend = await User.findOneAndUpdate(
-                { _id: req.params.friendId },
-                { $push: { friends: req.params.id } },
+            const updatedFriend = await User.findByIdAndUpdate(
+                req.params.friendId,
+                { $pull: { friends: req.params.id } },
             )
-            if (!updatedFriend) {
+            if (!updatedFriend || !updatedUser) {
                 return res.status(404).json(`Can't find Friend`)
             }
             res.status(200).json('Friend Deleted')
