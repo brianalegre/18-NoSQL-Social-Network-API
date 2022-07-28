@@ -28,7 +28,7 @@ module.exports = {
     async singleUser(req, res) {
         try {
             const user = await User.findOne(
-                { _id: req.params.studentId }
+                { _id: req.params.id }
             )
             if (!user) {
                 return res.status(404).json({ message: 'User does not exist' })
