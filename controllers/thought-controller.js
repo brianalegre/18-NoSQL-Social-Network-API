@@ -94,8 +94,8 @@ module.exports = {
     async addReaction(req, res) {
         try {
             const newReaction = await Thought.findOneAndUpdate(
-                { id_: req.params.id },
-                { $addToSet: { reactions: body } },
+                { _id: req.params.id },
+                { $push: { reactions: req.body } },
                 { new: true },
             )
             if (!newReaction) {
@@ -103,15 +103,16 @@ module.exports = {
             }
             res.status(200).json(newReaction)
         } catch (err) {
-            res.status(500).json({ message: 'Error on createReaction', err })
+            res.status(500).json({ message: 'Error on addReaction', err })
         }
     },
+
 
     // DELETE REACTION
     async delReaction(req, res) {
         try {
             const deleteReaction = await Thought.findOneAndUpdate(
-                { id_: req.params.id },
+                { _id: req.params.id },
                 { $pull: { reactions: { reactionId: req.params.reactionId } } },
                 { new: true }
             )

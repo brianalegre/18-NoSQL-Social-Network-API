@@ -12,7 +12,6 @@ const {
     addReaction,
     delReaction,
     singleReaction,
-    allReactions
 } = require('../../controllers/thought-controller');
 
 
