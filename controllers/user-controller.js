@@ -112,6 +112,8 @@ module.exports = {
                 req.params.friendId,
                 { $pull: { friends: req.params.id } },
             )
+            // GETS BSON ERROR IF STRING USED IN ID
+            // NEED TO DEBUG LATER
             if (!updatedFriend || !updatedUser) {
                 return res.status(404).json(`Can't find Friend`)
             }

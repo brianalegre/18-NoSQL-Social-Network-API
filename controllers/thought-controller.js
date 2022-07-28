@@ -1,5 +1,5 @@
 // Import
-const { Thought, Reaction } = require('../models')
+const { User, Thought, Reaction } = require('../models')
 
 
 module.exports = {
@@ -48,7 +48,7 @@ module.exports = {
         try {
 
             const updatedThought = await Thought.findOneAndUpdate(
-                { _id: req.params.friendId },
+                { _id: req.params.id },
                 { $set: req.body },
             )
             if (!updatedThought) {
@@ -63,7 +63,7 @@ module.exports = {
     // DELETE THOUGHT
     async delThought(req, res) {
         try {
-            const deleteThought = await Thought.findOneAndUpdate(
+            const deleteThought = await Thought.findOneAndDelete(
                 { _id: req.params.id }
             )
             if (!deleteThought) {
