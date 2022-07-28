@@ -58,7 +58,7 @@ module.exports = {
     // DELETE UESR
     async delUser(req, res) {
         try {
-            const deleteUser = await User.findOneAndUpdate(
+            const deleteUser = await User.findOneAndDelete(
                 { _id: req.params.id }
             )
             if (!deleteUser) {
