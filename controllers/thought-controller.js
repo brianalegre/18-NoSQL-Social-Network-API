@@ -75,8 +75,23 @@ module.exports = {
         }
     },
 
-    // CREATE REACTION
-    async createReaction(req, res) {
+    // SINGLE REACTION
+    async singleReaction(req, res) {
+        try {
+            const reaction = await Reaction.findOne(
+                { id_: req.params.id },
+            )
+            if (!reaction) {
+                return res.status(404).json('Reaction not found')
+            }
+            res.status(200).json(reaction)
+        } catch (err) {
+            res.status(500).json({ message: 'Error on singleReaction', err })
+        }
+    },
+
+    // ADD REACTION
+    async addReaction(req, res) {
         try {
             const newReaction = await Thought.findOneAndUpdate(
                 { id_: req.params.id },

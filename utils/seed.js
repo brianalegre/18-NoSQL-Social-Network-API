@@ -81,6 +81,7 @@ connection.once("open", async () => {
     console.log("Reactions successfully seeded!");
 
     console.info(' --- Seeding complete! ---');
+    console.table(userSeed)
     process.exit(0);
 });
 
