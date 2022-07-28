@@ -82,13 +82,9 @@ module.exports = {
         try {
             const newReaction = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
-                // { $addToSet: { Reactions: req.body } },
                 { $push: { reactions: req.body } },
                 { new: true },
             )
-                .populate({ path: 'reactions', select: '-__v' })
-                .select('-__v')
-
             if (!newReaction) {
                 return res.status(404).json('Thought not found')
             }
@@ -121,13 +117,13 @@ module.exports = {
         try {
             const deleteReaction = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
-                { $pull: { reactions: { reactionId: req.params.reactionId } } },
+                { $pull: { reactions: { _id: req.params.reactionId } } },
                 { new: true }
             )
             if (!deleteReaction) {
                 return res.status(404).json('Reaction not found')
             }
-            res.status(200).json(deleteReaction)
+            res.status(200).json('Reaction Deleted')
         } catch (err) {
             res.status(500).json({ message: 'Error on delReaction', err })
         }
