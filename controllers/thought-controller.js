@@ -1,5 +1,7 @@
 // Import
 const { User, Thought, Reaction } = require('../models')
+const { ObjectId } = require('mongoose').Types;
+
 
 
 module.exports = {
@@ -32,7 +34,7 @@ module.exports = {
     async singleThought(req, res) {
         try {
             const thought = await Thought.findOne(
-                { _id: req.params.id }
+                { _id: req.params.thoughtId }
             )
             if (!thought) {
                 return res.status(404).json('Thought not found')
@@ -48,7 +50,7 @@ module.exports = {
         try {
 
             const updatedThought = await Thought.findOneAndUpdate(
-                { _id: req.params.id },
+                { _id: req.params.thoughtId },
                 { $set: req.body },
             )
             if (!updatedThought) {
@@ -64,7 +66,7 @@ module.exports = {
     async delThought(req, res) {
         try {
             const deleteThought = await Thought.findOneAndDelete(
-                { _id: req.params.id }
+                { _id: req.params.thoughtId }
             )
             if (!deleteThought) {
                 return res.status(404).json('Thought not found')
@@ -75,11 +77,32 @@ module.exports = {
         }
     },
 
+    // ADD REACTION
+    async addReaction(req, res) {
+        try {
+            const newReaction = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                // { $addToSet: { Reactions: req.body } },
+                { $push: { reactions: req.body } },
+                { new: true },
+            )
+                .populate({ path: 'reactions', select: '-__v' })
+                .select('-__v')
+
+            if (!newReaction) {
+                return res.status(404).json('Thought not found')
+            }
+            res.status(200).json(newReaction)
+        } catch (err) {
+            res.status(500).json({ message: 'Error on addReaction', err })
+        }
+    },
+
     // SINGLE REACTION
     async singleReaction(req, res) {
         try {
             const reaction = await Reaction.findOne(
-                { id_: req.params.id },
+                { _id: req.params.reactionId },
             )
             if (!reaction) {
                 return res.status(404).json('Reaction not found')
@@ -90,29 +113,14 @@ module.exports = {
         }
     },
 
-    // ADD REACTION
-    async addReaction(req, res) {
-        try {
-            const newReaction = await Thought.findOneAndUpdate(
-                { _id: req.params.id },
-                { $push: { reactions: req.body } },
-                { new: true },
-            )
-            if (!newReaction) {
-                return res.status(404).json('Thought not found')
-            }
-            res.status(200).json(newReaction)
-        } catch (err) {
-            res.status(500).json({ message: 'Error on addReaction', err })
-        }
-    },
+
 
 
     // DELETE REACTION
     async delReaction(req, res) {
         try {
             const deleteReaction = await Thought.findOneAndUpdate(
-                { _id: req.params.id },
+                { _id: req.params.thoughtId },
                 { $pull: { reactions: { reactionId: req.params.reactionId } } },
                 { new: true }
             )

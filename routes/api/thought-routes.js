@@ -21,22 +21,22 @@ router.route('/')
     .get(allThoughts)
     .post(createThought);
 
-// /api/thoughts/:id
+// /api/thoughts/:thoughtId
 // GET SINGLE THOUGHT, DEL THOUGHT, UPD THOUGHT
-router.route('/:id')
+router.route('/:thoughtId')
     .get(singleThought)
     .delete(delThought)
     .put(updateThought)
     .put()
 
-// /api/:id/reactions
+// /api/thoughts/:thoughtId/reactions
 // ADD REACTION
-router.route('/:id/reactions')
+router.route('/:thoughtId/reactions')
     .post(addReaction)
 
-// /api//:id/reactions/:reactionId
+// /api/thoughts/:thoughtId/reactions/:reactionId
 // GET SINGLE REACTION, DEL REACTION
-router.route('/:id/reactions/:reactionId')
+router.route('/:thoughtId/reactions/:reactionId')
     .get(singleReaction)
     .delete(delReaction)
 
