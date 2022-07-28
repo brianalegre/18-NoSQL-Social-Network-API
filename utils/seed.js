@@ -1,6 +1,6 @@
 // IMPORT
 const connection = require("../config/connection");
-const { User, Thought, Reaction } = require("../models");
+const { User, Thought } = require("../models");
 
 // USER SEED DATA
 const userSeed = [
@@ -42,25 +42,6 @@ const thoughtSeed = [
     },
 ]
 
-// REACTION SEED DATA
-const reactionSeed = [
-    {
-        'reactionBody': 'First Reaction',
-        'username': 'userOne'
-    },
-    {
-        'reactionBody': 'Second Reaction',
-        'username': 'userTwo'
-    },
-    {
-        'reactionBody': 'Third Reaction',
-        'username': 'userThree'
-    },
-    {
-        'reactionBody': 'Fourth Reaction',
-        'username': 'userFour'
-    },
-]
 
 // SEED DATABASE
 connection.once("open", async () => {
@@ -68,7 +49,6 @@ connection.once("open", async () => {
     // DEL EXISTING SEED
     await User.deleteMany({});
     await Thought.deleteMany({});
-    await Reaction.deleteMany({});
 
     // INSERT TO DB
     await User.collection.insertMany(userSeed);
@@ -76,9 +56,6 @@ connection.once("open", async () => {
 
     await Thought.collection.insertMany(thoughtSeed);
     console.log("Thoughts successfully seeded!");
-
-    await Reaction.collection.insertMany(reactionSeed);
-    console.log("Reactions successfully seeded!");
 
     console.info(' --- Seeding complete! ---');
     console.table(userSeed)

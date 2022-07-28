@@ -1,5 +1,6 @@
 // Import
-const User = require('../models/User');
+const { User, Thought, Reaction } = require('../models')
+
 
 
 module.exports = {
@@ -56,19 +57,36 @@ module.exports = {
         }
     },
 
-    // DELETE UESR
-    async delUser(req, res) {
-        try {
-            const deleteUser = await User.findOneAndDelete(
-                { _id: req.params.id }
+    // DELETE USER
+    // async delUser(req, res) {
+    //     try {
+    //         const user = await User.findOne(
+    //             { _id: req.params.id }
+    //         )
+    //         const deleteUser = await User.findOneAndDelete(
+    //             { _id: req.params.id }
+    //         )
+    //         if (!deleteUser) {
+    //             return res.status(404).json(`Can't find User`)
+    //         }
+    //         // BONUS
+    //         Thought.deleteMany({ _id: { $in: user.thoughts } })
+    //         res.status(200).json(deleteUser)
+    //     } catch (err) {
+    //         res.status(500).json({ message: 'Error on delUser', err })
+    //     }
+    // },
+
+    // DELETE USER
+    delUser(req, res) {
+        User.findOneAndDelete({ _id: req.params.id })
+            .then((user) =>
+                !user
+                    ? res.status(404).json({ message: 'No user with that ID' })
+                    : Thought.deleteMany({ _id: { $in: user.thoughts } })
             )
-            if (!deleteUser) {
-                return res.status(404).json(`Can't find User`)
-            }
-            res.status(200).json(deleteUser)
-        } catch (err) {
-            res.status(500).json({ message: 'Error on delUser', err })
-        }
+            .then(() => res.json({ message: 'User and associated thoughts deleted!' }))
+            .catch((err) => res.status(500).json(err));
     },
 
     // ADD USER FRIEND
