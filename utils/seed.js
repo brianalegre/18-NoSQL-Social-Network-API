@@ -22,26 +22,6 @@ const userSeed = [
     },
 ]
 
-// THOUGHT SEED DATA
-const thoughtSeed = [
-    {
-        'thoughtText': 'First Thought',
-        'username': 'userOne'
-    },
-    {
-        'thoughtText': 'Second Thought',
-        'username': 'userTwo'
-    },
-    {
-        'thoughtText': 'Third Thought',
-        'username': 'userThree'
-    },
-    {
-        'thoughtText': 'Fourth Thought',
-        'username': 'userFour'
-    },
-]
-
 
 // SEED DATABASE
 connection.once("open", async () => {
@@ -53,9 +33,6 @@ connection.once("open", async () => {
     // INSERT TO DB
     await User.collection.insertMany(userSeed);
     console.log("Users successfully seeded!");
-
-    await Thought.collection.insertMany(thoughtSeed);
-    console.log("Thoughts successfully seeded!");
 
     console.info(' --- Seeding complete! ---');
     console.table(userSeed)

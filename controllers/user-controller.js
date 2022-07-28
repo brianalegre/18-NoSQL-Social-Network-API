@@ -60,9 +60,6 @@ module.exports = {
     // DELETE USER
     // async delUser(req, res) {
     //     try {
-    //         const user = await User.findOne(
-    //             { _id: req.params.id }
-    //         )
     //         const deleteUser = await User.findOneAndDelete(
     //             { _id: req.params.id }
     //         )
@@ -74,7 +71,7 @@ module.exports = {
     //         res.status(200).json(deleteUser)
     //     } catch (err) {
     //         res.status(500).json({ message: 'Error on delUser', err })
-    //     }
+    //     }sfs
     // },
 
     // DELETE USER
@@ -82,7 +79,7 @@ module.exports = {
         User.findOneAndDelete({ _id: req.params.id })
             .then((user) =>
                 !user
-                    ? res.status(404).json({ message: 'No user with that ID' })
+                    ? res.status(404).json({ message: 'No usfser with that ID' })
                     : Thought.deleteMany({ _id: { $in: user.thoughts } })
             )
             .then(() => res.json({ message: 'User and associated thoughts deleted!' }))
