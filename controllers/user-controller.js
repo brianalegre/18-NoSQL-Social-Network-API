@@ -45,11 +45,12 @@ module.exports = {
             const updatedUser = await User.findOneAndUpdate(
                 { _id: req.params.id },
                 { $set: req.body },
+                { new: true }
             )
             if (!updatedUser) {
                 return res.status(404).json(`Can't find User`)
             }
-            res.statu(200).json(updatedUser)
+            res.status(200).json(updatedUser)
         } catch (err) {
             res.status(500).json({ message: 'Error on updateUser', err })
         }
