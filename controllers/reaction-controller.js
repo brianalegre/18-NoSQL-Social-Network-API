@@ -4,7 +4,7 @@ const { User, Thought, Reaction } = require('../models')
 
 module.exports = {
 
-    // ALL THOUGHTS + INCLUDE FRIENDS
+    // ALL REACTIONS + INCLUDE FRIENDS
     async allReactions(req, res) {
         try {
             const reactions = await Reaction.find();
