@@ -73,7 +73,7 @@ module.exports = {
     //         res.status(200).json(deleteUser)
     //     } catch (err) {
     //         res.status(500).json({ message: 'Error on delUser', err })
-    //     }sfs
+    //     }
     // },
 
     // DELETE USER
