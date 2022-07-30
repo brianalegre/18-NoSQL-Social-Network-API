@@ -19,6 +19,8 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
+      get: date => date.toString().match(/[A-Za-z]{3}\s\d{2}\s\d{4}/)[0]
+
     }
   },
   {
