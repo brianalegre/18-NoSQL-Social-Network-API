@@ -1,8 +1,5 @@
 // Import
 const { User, Thought, Reaction } = require('../models')
-const { ObjectId } = require('mongoose').Types;
-
-
 
 module.exports = {
 

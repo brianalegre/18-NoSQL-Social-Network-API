@@ -1,14 +1,14 @@
 // Import
 const { User, Thought, Reaction } = require('../models')
 
-
-
 module.exports = {
 
     // ALL USERS + INCLUDE FRIENDS
     async allUsers(req, res) {
         try {
-            const users = await User.find();
+            const users = await User.find()
+                .populate({ path: 'thoughts', select: '-__v' })
+                .populate({ path: 'friends', select: '-__v' })
             res.status(200).json(users);
         } catch (err) {
             res.status(500).json({ message: 'Error on allUsers', err });
@@ -31,6 +31,8 @@ module.exports = {
             const user = await User.findOne(
                 { _id: req.params.id }
             )
+                .populate({ path: 'thoughts', select: '-__v' })
+                .populate({ path: 'friends', select: '-__v' })
             if (!user) {
                 return res.status(404).json({ message: 'User does not exist' })
             }
