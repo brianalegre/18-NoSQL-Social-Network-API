@@ -38,7 +38,7 @@
     - https://github.com/brianalegre/18-NoSQL-Social-Network-API
 -   Video Demo (YouTube):
     - https://youtu.be/s2GLD1f1Lmo
--   Vide Demo (Github):
+-   Video Demo (Github):
     - https://github.com/brianalegre/18-NoSQL-Social-Network-API/blob/main/assets/images/SocialMediaAPIDemo.mp4
 
 ## Criteria
